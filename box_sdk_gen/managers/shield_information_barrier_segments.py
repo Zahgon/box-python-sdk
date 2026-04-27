@@ -75,26 +75,7 @@ class ShieldInformationBarrierSegmentsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/shield_information_barrier_segments/',
-                        to_string(shield_information_barrier_segment_id),
-                    ]
-                ),
-                method='GET',
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, ShieldInformationBarrierSegment)
+        pass
 
     def delete_shield_information_barrier_segment_by_id(
         self,
@@ -113,26 +94,7 @@ class ShieldInformationBarrierSegmentsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/shield_information_barrier_segments/',
-                        to_string(shield_information_barrier_segment_id),
-                    ]
-                ),
-                method='DELETE',
-                headers=headers_map,
-                response_format=ResponseFormat.NO_CONTENT,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return None
+        pass
 
     def update_shield_information_barrier_segment_by_id(
         self,
@@ -155,29 +117,7 @@ class ShieldInformationBarrierSegmentsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {'name': name, 'description': description}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/shield_information_barrier_segments/',
-                        to_string(shield_information_barrier_segment_id),
-                    ]
-                ),
-                method='PUT',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, ShieldInformationBarrierSegment)
+        pass
 
     def get_shield_information_barrier_segments(
         self,
@@ -204,35 +144,7 @@ class ShieldInformationBarrierSegmentsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'shield_information_barrier_id': to_string(
-                    shield_information_barrier_id
-                ),
-                'marker': to_string(marker),
-                'limit': to_string(limit),
-            }
-        )
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/shield_information_barrier_segments',
-                    ]
-                ),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, ShieldInformationBarrierSegments)
+        pass
 
     def create_shield_information_barrier_segment(
         self,
@@ -251,29 +163,4 @@ class ShieldInformationBarrierSegmentsManager:
         :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {
-            'shield_information_barrier': shield_information_barrier,
-            'name': name,
-            'description': description,
-        }
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/shield_information_barrier_segments',
-                    ]
-                ),
-                method='POST',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, ShieldInformationBarrierSegment)
+        pass

@@ -103,33 +103,7 @@ class AiStudioManager:
         :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'mode': to_string(mode),
-                'fields': to_string(fields),
-                'agent_state': to_string(agent_state),
-                'include_box_default': to_string(include_box_default),
-                'marker': to_string(marker),
-                'limit': to_string(limit),
-            }
-        )
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [self.network_session.base_urls.base_url, '/2.0/ai_agents']
-                ),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, AiMultipleAgentResponse)
+        pass
 
     def create_ai_agent(
         self,
@@ -160,34 +134,7 @@ class AiStudioManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {
-            'type': type,
-            'name': name,
-            'access_state': access_state,
-            'icon_reference': icon_reference,
-            'allowed_entities': allowed_entities,
-            'ask': ask,
-            'text_gen': text_gen,
-            'extract': extract,
-        }
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [self.network_session.base_urls.base_url, '/2.0/ai_agents']
-                ),
-                method='POST',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, AiSingleAgentResponseFull)
+        pass
 
     def update_ai_agent_by_id(
         self,
@@ -222,38 +169,7 @@ class AiStudioManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {
-            'type': type,
-            'name': name,
-            'access_state': access_state,
-            'icon_reference': icon_reference,
-            'allowed_entities': allowed_entities,
-            'ask': ask,
-            'text_gen': text_gen,
-            'extract': extract,
-        }
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/ai_agents/',
-                        to_string(agent_id),
-                    ]
-                ),
-                method='PUT',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, AiSingleAgentResponseFull)
+        pass
 
     def get_ai_agent_by_id(
         self,
@@ -272,28 +188,7 @@ class AiStudioManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/ai_agents/',
-                        to_string(agent_id),
-                    ]
-                ),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, AiSingleAgentResponseFull)
+        pass
 
     def delete_ai_agent_by_id(
         self, agent_id: str, *, extra_headers: Optional[Dict[str, Optional[str]]] = None
@@ -306,23 +201,4 @@ class AiStudioManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/ai_agents/',
-                        to_string(agent_id),
-                    ]
-                ),
-                method='DELETE',
-                headers=headers_map,
-                response_format=ResponseFormat.NO_CONTENT,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return None
+        pass

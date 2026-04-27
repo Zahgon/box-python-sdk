@@ -255,32 +255,7 @@ class AiManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {
-            'mode': mode,
-            'prompt': prompt,
-            'items': items,
-            'dialogue_history': dialogue_history,
-            'include_citations': include_citations,
-            'ai_agent': ai_agent,
-        }
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join([self.network_session.base_urls.base_url, '/2.0/ai/ask']),
-                method='POST',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        if to_string(response.status) == '204':
-            return None
-        return deserialize(response.data, AiResponseFull)
+        pass
 
     def create_ai_text_gen(
         self,
@@ -306,30 +281,7 @@ class AiManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {
-            'prompt': prompt,
-            'items': items,
-            'dialogue_history': dialogue_history,
-            'ai_agent': ai_agent,
-        }
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [self.network_session.base_urls.base_url, '/2.0/ai/text_gen']
-                ),
-                method='POST',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, AiResponse)
+        pass
 
     def get_ai_agent_default_config(
         self,
@@ -351,30 +303,7 @@ class AiManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'mode': to_string(mode),
-                'language': to_string(language),
-                'model': to_string(model),
-            }
-        )
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [self.network_session.base_urls.base_url, '/2.0/ai_agent_default']
-                ),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, AiAgent)
+        pass
 
     def create_ai_extract(
         self,
@@ -399,25 +328,7 @@ class AiManager:
         :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {'prompt': prompt, 'items': items, 'ai_agent': ai_agent}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [self.network_session.base_urls.base_url, '/2.0/ai/extract']
-                ),
-                method='POST',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, AiResponse)
+        pass
 
     def create_ai_extract_structured(
         self,
@@ -459,32 +370,4 @@ class AiManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {
-            'items': items,
-            'metadata_template': metadata_template,
-            'fields': fields,
-            'ai_agent': ai_agent,
-            'include_confidence_score': include_confidence_score,
-            'include_reference': include_reference,
-        }
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/ai/extract_structured',
-                    ]
-                ),
-                method='POST',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, AiExtractStructuredResponse)
+        pass

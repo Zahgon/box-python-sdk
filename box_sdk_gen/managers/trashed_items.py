@@ -93,7 +93,7 @@ class TrashedItemsManager:
                 marker-based pagination using the `marker` parameter.
 
 
-                The number of entries returned may be less than `total_count`. For example, if a user deletes items from a shared folder and is later removed as a collaborator, those deleted items will no longer appear in this endpoint’s results, even though they are still included in `total_count`.
+                The number of entries returned may be less than `total_count`. For example, if a user deletes items from a shared folder and is later removed as a collaborator, those deleted items will no longer appear in this endpointâ€™s results, even though they are still included in `total_count`.
 
                 :param fields: A comma-separated list of attributes to include in the
         response. This can be used to request fields that are
@@ -141,34 +141,4 @@ class TrashedItemsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'fields': to_string(fields),
-                'limit': to_string(limit),
-                'offset': to_string(offset),
-                'usemarker': to_string(usemarker),
-                'marker': to_string(marker),
-                'direction': to_string(direction),
-                'sort': to_string(sort),
-            }
-        )
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/folders/trash/items',
-                    ]
-                ),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, Items)
+        pass

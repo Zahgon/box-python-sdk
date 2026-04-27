@@ -471,7 +471,7 @@ class EventsManager:
         receive a response with the value `reconnect`. When you receive this response
 
 
-        you’ll make another call to this endpoint to restart the process.
+        youâ€™ll make another call to this endpoint to restart the process.
 
 
         If you receive no events in `retry_timeout` seconds then you will need to
@@ -494,20 +494,7 @@ class EventsManager:
         :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join([self.network_session.base_urls.base_url, '/2.0/events']),
-                method='OPTIONS',
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, RealtimeServers)
+        pass
 
     def get_events(
         self,
@@ -593,31 +580,7 @@ class EventsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'stream_type': to_string(stream_type),
-                'stream_position': to_string(stream_position),
-                'limit': to_string(limit),
-                'event_type': to_string(event_type),
-                'created_after': to_string(created_after),
-                'created_before': to_string(created_before),
-            }
-        )
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join([self.network_session.base_urls.base_url, '/2.0/events']),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, Events)
+        pass
 
     def get_event_stream(
         self,
@@ -632,10 +595,4 @@ class EventsManager:
         :param headers: Headers of getEvents method, defaults to None
         :type headers: GetEventStreamHeaders, optional
         """
-        if query_params is None:
-            query_params = GetEventStreamQueryParams()
-        if headers is None:
-            headers = GetEventStreamHeaders()
-        return EventStream(
-            events_manager=self, query_params=query_params, headers_input=headers
-        )
+        pass

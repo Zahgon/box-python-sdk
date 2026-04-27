@@ -154,25 +154,7 @@ class ZipDownloadsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {'items': items, 'download_file_name': download_file_name}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [self.network_session.base_urls.base_url, '/2.0/zip_downloads']
-                ),
-                method='POST',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, ZipDownload)
+        pass
 
     def get_zip_download_content(
         self,
@@ -218,20 +200,7 @@ class ZipDownloadsManager:
                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=download_url,
-                method='GET',
-                headers=headers_map,
-                response_format=ResponseFormat.BINARY,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return response.content
+        pass
 
     def get_zip_download_status(
         self,
@@ -274,20 +243,7 @@ class ZipDownloadsManager:
                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=status_url,
-                method='GET',
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, ZipDownloadStatus)
+        pass
 
     def download_zip(
         self,
@@ -307,12 +263,4 @@ class ZipDownloadsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {'items': items, 'download_file_name': download_file_name}
-        zip_download_session: ZipDownload = self.create_zip_download(
-            items, download_file_name=download_file_name, extra_headers=extra_headers
-        )
-        return self.get_zip_download_content(
-            zip_download_session.download_url, extra_headers=extra_headers
-        )
+        pass

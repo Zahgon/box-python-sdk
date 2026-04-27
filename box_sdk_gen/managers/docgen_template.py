@@ -87,27 +87,7 @@ class DocgenTemplateManager:
         :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {'file': file}
-        headers_map: Dict[str, str] = prepare_params(
-            {'box-version': to_string(box_version), **extra_headers}
-        )
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [self.network_session.base_urls.base_url, '/2.0/docgen_templates']
-                ),
-                method='POST',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, DocGenTemplateBaseV2025R0)
+        pass
 
     def get_docgen_templates_v2025_r0(
         self,
@@ -131,28 +111,7 @@ class DocgenTemplateManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'marker': to_string(marker), 'limit': to_string(limit)}
-        )
-        headers_map: Dict[str, str] = prepare_params(
-            {'box-version': to_string(box_version), **extra_headers}
-        )
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [self.network_session.base_urls.base_url, '/2.0/docgen_templates']
-                ),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, DocGenTemplatesV2025R0)
+        pass
 
     def delete_docgen_template_by_id_v2025_r0(
         self,
@@ -171,28 +130,7 @@ class DocgenTemplateManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params(
-            {'box-version': to_string(box_version), **extra_headers}
-        )
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/docgen_templates/',
-                        to_string(template_id),
-                    ]
-                ),
-                method='DELETE',
-                headers=headers_map,
-                response_format=ResponseFormat.NO_CONTENT,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return None
+        pass
 
     def get_docgen_template_by_id_v2025_r0(
         self,
@@ -211,28 +149,7 @@ class DocgenTemplateManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params(
-            {'box-version': to_string(box_version), **extra_headers}
-        )
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/docgen_templates/',
-                        to_string(template_id),
-                    ]
-                ),
-                method='GET',
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, DocGenTemplateV2025R0)
+        pass
 
     def get_docgen_template_tags_v2025_r0(
         self,
@@ -263,37 +180,7 @@ class DocgenTemplateManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'template_version_id': to_string(template_version_id),
-                'marker': to_string(marker),
-                'limit': to_string(limit),
-            }
-        )
-        headers_map: Dict[str, str] = prepare_params(
-            {'box-version': to_string(box_version), **extra_headers}
-        )
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/docgen_templates/',
-                        to_string(template_id),
-                        '/tags',
-                    ]
-                ),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, DocGenTagsV2025R0)
+        pass
 
     def get_docgen_template_job_by_id_v2025_r0(
         self,
@@ -321,29 +208,4 @@ class DocgenTemplateManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'marker': to_string(marker), 'limit': to_string(limit)}
-        )
-        headers_map: Dict[str, str] = prepare_params(
-            {'box-version': to_string(box_version), **extra_headers}
-        )
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/docgen_template_jobs/',
-                        to_string(template_id),
-                    ]
-                ),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, DocGenJobsV2025R0)
+        pass

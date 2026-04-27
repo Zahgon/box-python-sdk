@@ -309,35 +309,7 @@ class FilesManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params(
-            {
-                'if-none-match': to_string(if_none_match),
-                'boxapi': to_string(boxapi),
-                'x-rep-hints': to_string(x_rep_hints),
-                **extra_headers,
-            }
-        )
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/files/',
-                        to_string(file_id),
-                    ]
-                ),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, FileFull)
+        pass
 
     def update_file_by_id(
         self,
@@ -434,43 +406,7 @@ class FilesManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {
-            'name': name,
-            'description': description,
-            'parent': parent,
-            'shared_link': shared_link,
-            'lock': lock,
-            'disposition_at': disposition_at,
-            'permissions': permissions,
-            'collections': collections,
-            'tags': tags,
-        }
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params(
-            {'if-match': to_string(if_match), **extra_headers}
-        )
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/files/',
-                        to_string(file_id),
-                    ]
-                ),
-                method='PUT',
-                params=query_params_map,
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, FileFull)
+        pass
 
     def delete_file_by_id(
         self,
@@ -510,28 +446,7 @@ class FilesManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params(
-            {'if-match': to_string(if_match), **extra_headers}
-        )
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/files/',
-                        to_string(file_id),
-                    ]
-                ),
-                method='DELETE',
-                headers=headers_map,
-                response_format=ResponseFormat.NO_CONTENT,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return None
+        pass
 
     def copy_file(
         self,
@@ -579,32 +494,7 @@ class FilesManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {'name': name, 'version': version, 'parent': parent}
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/files/',
-                        to_string(file_id),
-                        '/copy',
-                    ]
-                ),
-                method='POST',
-                params=query_params_map,
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, FileFull)
+        pass
 
     def get_file_thumbnail_url(
         self,
@@ -660,42 +550,7 @@ class FilesManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'min_height': to_string(min_height),
-                'min_width': to_string(min_width),
-                'max_height': to_string(max_height),
-                'max_width': to_string(max_width),
-            }
-        )
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/files/',
-                        to_string(file_id),
-                        '/thumbnail.',
-                        to_string(extension),
-                    ]
-                ),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.NO_CONTENT,
-                auth=self.auth,
-                network_session=self.network_session,
-                follow_redirects=False,
-            )
-        )
-        if 'location' in response.headers:
-            return response.headers.get('location')
-        if 'Location' in response.headers:
-            return response.headers.get('Location')
-        raise BoxSDKError(message='No location header in response')
+        pass
 
     def get_file_thumbnail_by_id(
         self,
@@ -751,36 +606,4 @@ class FilesManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'min_height': to_string(min_height),
-                'min_width': to_string(min_width),
-                'max_height': to_string(max_height),
-                'max_width': to_string(max_width),
-            }
-        )
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/files/',
-                        to_string(file_id),
-                        '/thumbnail.',
-                        to_string(extension),
-                    ]
-                ),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.BINARY,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        if to_string(response.status) == '202':
-            return None
-        return response.content
+        pass

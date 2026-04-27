@@ -405,42 +405,7 @@ class FoldersManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'fields': to_string(fields),
-                'sort': to_string(sort),
-                'direction': to_string(direction),
-                'offset': to_string(offset),
-                'limit': to_string(limit),
-            }
-        )
-        headers_map: Dict[str, str] = prepare_params(
-            {
-                'if-none-match': to_string(if_none_match),
-                'boxapi': to_string(boxapi),
-                **extra_headers,
-            }
-        )
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/folders/',
-                        to_string(folder_id),
-                    ]
-                ),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, FolderFull)
+        pass
 
     def update_folder_by_id(
         self,
@@ -559,47 +524,7 @@ class FoldersManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {
-            'name': name,
-            'description': description,
-            'sync_state': sync_state,
-            'can_non_owners_invite': can_non_owners_invite,
-            'parent': parent,
-            'shared_link': shared_link,
-            'folder_upload_email': folder_upload_email,
-            'tags': tags,
-            'is_collaboration_restricted_to_enterprise': (
-                is_collaboration_restricted_to_enterprise
-            ),
-            'collections': collections,
-            'can_non_owners_view_collaborators': can_non_owners_view_collaborators,
-        }
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params(
-            {'if-match': to_string(if_match), **extra_headers}
-        )
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/folders/',
-                        to_string(folder_id),
-                    ]
-                ),
-                method='PUT',
-                params=query_params_map,
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, FolderFull)
+        pass
 
     def delete_folder_by_id(
         self,
@@ -640,32 +565,7 @@ class FoldersManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'recursive': to_string(recursive)}
-        )
-        headers_map: Dict[str, str] = prepare_params(
-            {'if-match': to_string(if_match), **extra_headers}
-        )
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/folders/',
-                        to_string(folder_id),
-                    ]
-                ),
-                method='DELETE',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.NO_CONTENT,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return None
+        pass
 
     def get_folder_items(
         self,
@@ -785,41 +685,7 @@ class FoldersManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'fields': to_string(fields),
-                'usemarker': to_string(usemarker),
-                'marker': to_string(marker),
-                'offset': to_string(offset),
-                'limit': to_string(limit),
-                'sort': to_string(sort),
-                'direction': to_string(direction),
-            }
-        )
-        headers_map: Dict[str, str] = prepare_params(
-            {'boxapi': to_string(boxapi), **extra_headers}
-        )
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/folders/',
-                        to_string(folder_id),
-                        '/items',
-                    ]
-                ),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, Items)
+        pass
 
     def create_folder(
         self,
@@ -863,30 +729,7 @@ class FoldersManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {
-            'name': name,
-            'parent': parent,
-            'folder_upload_email': folder_upload_email,
-            'sync_state': sync_state,
-        }
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join([self.network_session.base_urls.base_url, '/2.0/folders']),
-                method='POST',
-                params=query_params_map,
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, FolderFull)
+        pass
 
     def copy_folder(
         self,
@@ -938,29 +781,4 @@ class FoldersManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {'name': name, 'parent': parent}
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/folders/',
-                        to_string(folder_id),
-                        '/copy',
-                    ]
-                ),
-                method='POST',
-                params=query_params_map,
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, FolderFull)
+        pass

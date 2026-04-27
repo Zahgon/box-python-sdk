@@ -103,33 +103,7 @@ class HubItemsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'hub_id': to_string(hub_id),
-                'parent_id': to_string(parent_id),
-                'marker': to_string(marker),
-                'limit': to_string(limit),
-            }
-        )
-        headers_map: Dict[str, str] = prepare_params(
-            {'box-version': to_string(box_version), **extra_headers}
-        )
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [self.network_session.base_urls.base_url, '/2.0/hub_items']
-                ),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, HubItemsV2025R0)
+        pass
 
     def manage_hub_items_v2025_r0(
         self,
@@ -157,29 +131,4 @@ class HubItemsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {'operations': operations}
-        headers_map: Dict[str, str] = prepare_params(
-            {'box-version': to_string(box_version), **extra_headers}
-        )
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/hubs/',
-                        to_string(hub_id),
-                        '/manage_items',
-                    ]
-                ),
-                method='POST',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, HubItemsManageResponseV2025R0)
+        pass

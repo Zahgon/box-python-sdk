@@ -44,23 +44,14 @@ class ResponseByteStream(ByteStream):
         Read up to `size` bytes from the iterator into the buffer
         :param size: Number of bytes to read. If None, read the entire stream.
         """
-        if self._eos:
-            return
-
-        while len(self._buffer) < size:
-            try:
-                chunk = next(self._iterator)
-                self._buffer += chunk
-            except StopIteration:
-                self._eos = True
-                break
+        pass
 
     def tell(self):
         """
         Returns the current position in the stream
         :return:
         """
-        return self._position
+        pass
 
     def read(self, size=None):
         """
@@ -68,19 +59,7 @@ class ResponseByteStream(ByteStream):
         :param size: Read up to `size` bytes from the stream. If None read the entire stream.
         :return: Bytes read from the stream
         """
-        if size is None:
-            # Read everything remaining in the stream.
-            result = self._buffer + b''.join(self._iterator)
-            self._buffer = b''
-            self._position += len(result)
-            self._eos = True
-            return result
-
-        self._read_from_iterator(size)
-        result = self._buffer[:size]
-        self._buffer = self._buffer[size:]
-        self._position += len(result)
-        return result
+        pass
 
     def seek(self, position, whence=SEEK_SET):
         """
@@ -89,106 +68,77 @@ class ResponseByteStream(ByteStream):
         :param whence: One of SEEK_SET = 0, SEEK_CUR = 1 or SEEK_END = 2
         :return: The new position in the stream
         """
-        if whence == SEEK_SET:
-            if position < self._position:
-                raise ValueError('Cannot seek backwards in a stream')
-            self.read(position - self._position)
-        elif whence == SEEK_CUR:
-            self.read(position)
-        elif whence == SEEK_END:
-            raise NotImplementedError('SEEK_END is not supported for streams')
-        else:
-            raise ValueError('Invalid value for `whence`')
-
-        return self._position
+        pass
 
 
 def get_env_var(name: str) -> str:
-    return os.getenv(name)
+    pass
 
 
 def get_uuid() -> str:
-    return str(uuid.uuid1())
+    pass
 
 
 def decode_base_64(value: str) -> str:
-    return base64.b64decode(value).decode()
+    pass
 
 
 def generate_byte_buffer(size: int) -> Buffer:
-    return Buffer(os.urandom(size))
+    pass
 
 
 def generate_byte_stream_from_buffer(buffer: Buffer) -> ByteStream:
-    return BytesIO(buffer)
+    pass
 
 
 def generate_byte_stream(size: int) -> ByteStream:
-    return BytesIO(os.urandom(size))
+    pass
 
 
 def buffer_equals(buffer1: Buffer, buffer2: Buffer) -> bool:
-    return buffer1 == buffer2
+    pass
 
 
 def buffer_length(buffer: Buffer) -> int:
-    return len(buffer)
+    pass
 
 
 def decode_base_64_byte_stream(value: str) -> ByteStream:
-    return BytesIO(base64.b64decode(value))
+    pass
 
 
 def string_to_byte_stream(value: str) -> ByteStream:
-    return BytesIO(bytes(value, 'utf-8'))
+    pass
 
 
 def read_byte_stream(byte_stream: ByteStream) -> Buffer:
-    return Buffer(byte_stream.read())
+    pass
 
 
 def write_input_stream_to_output_stream(
     input_stream: ByteStream, output_stream: OutputStream
 ):
-    shutil.copyfileobj(input_stream, output_stream)
+    pass
 
 
 def get_file_output_stream(file_path: str) -> OutputStream:
-    return open(file_path, 'wb')
+    pass
 
 
 def close_file_output_stream(file_output_stream: OutputStream):
-    file_output_stream.close()
+    pass
 
 
 def read_buffer_from_file(path: str) -> bytes:
-    with open(path, 'rb') as file:
-        return file.read()
+    pass
 
 
 def prepare_params(map: Dict[str, Optional[str]]) -> Dict[str, str]:
-    return {k: v for k, v in map.items() if v is not None}
+    pass
 
 
 def to_string(value: Any) -> Optional[str]:
-    if value is None:
-        return None
-    if isinstance(value, datetime.datetime):
-        return date_time_to_string(value)
-    if isinstance(value, datetime.date):
-        return date_to_string(value)
-    if (
-        isinstance(value, BaseObject)
-        or isinstance(value, list)
-        and len(value) >= 1
-        and isinstance(value[0], BaseObject)
-    ):
-        return ''.join(sd_to_json(serialize(value)).split())
-    if isinstance(value, list):
-        return ','.join(map(to_string, value))
-    if isinstance(value, Enum):
-        return value.value
-    return str(value)
+    pass
 
 
 class HashName(str, Enum):
@@ -201,14 +151,14 @@ class Hash:
         self.hash = hashlib.sha1()
 
     def update_hash(self, data: Buffer):
-        self.hash.update(data)
+        pass
 
     def digest_hash(self, encoding):
-        return base64.b64encode(self.hash.digest()).decode("utf-8")
+        pass
 
 
 def hex_to_base_64(data: hex):
-    return base64.b64encode(bytes.fromhex(data)).decode()
+    pass
 
 
 T = TypeVar('T')
@@ -219,24 +169,7 @@ Accumulator = TypeVar('Accumulator')
 def iterate_chunks(
     stream: ByteStream, chunk_size: int, file_size: int
 ) -> Iterable[ByteStream]:
-    stream_is_finished = False
-    while not stream_is_finished:
-        copied_length = 0
-        chunk = b''
-        while copied_length < chunk_size:
-            bytes_read = stream.read(chunk_size - copied_length)
-            if bytes_read is None:
-                # stream returns none when no bytes are ready currently but there are
-                # potentially more bytes in the stream to be read.
-                continue
-            if not bytes_read:
-                # stream is exhausted.
-                stream_is_finished = True
-                break
-            chunk += bytes_read
-            copied_length += len(bytes_read)
-        if chunk:
-            yield BytesIO(chunk)
+    pass
 
 
 def reduce_iterator(
@@ -244,33 +177,23 @@ def reduce_iterator(
     reducer: Callable[[Accumulator, T], Accumulator],
     initial_value: Accumulator,
 ) -> Accumulator:
-    result = initial_value
-
-    for item in iterator:
-        result = reducer(result, item)
-
-    return result
+    pass
 
 
 def read_text_from_file(file_path: str) -> str:
-    with open(file_path, 'r') as file:
-        return file.read()
+    pass
 
 
 def is_browser() -> bool:
-    return False
+    pass
 
 
 def get_epoch_time_in_seconds() -> int:
-    return int(time.time())
+    pass
 
 
 def get_value_from_object_raw_data(obj: BaseObject, key: str) -> Any:
-    keys = key.split('.')
-    value: dict = obj.raw_data
-    for k in keys:
-        value = value.get(k, {})
-    return value
+    pass
 
 
 class PrivateKeyDecryptor:
@@ -284,18 +207,7 @@ class PrivateKeyDecryptor:
 
 class DefaultPrivateKeyDecryptor(PrivateKeyDecryptor):
     def decrypt_private_key(self, encryptedPrivateKey: str, passphrase: str) -> Any:
-        if default_backend is None or serialization is None:
-            raise ImportError(
-                'Missing `cryptography` dependency. `cryptography` library is required to create JWT assertion.'
-            )
-        encoded_private_key = encode_str_ascii_or_raise(encryptedPrivateKey)
-        encoded_passphrase = encode_str_ascii_or_raise(passphrase)
-
-        return serialization.load_pem_private_key(
-            encoded_private_key,
-            password=encoded_passphrase,
-            backend=default_backend(),
-        )
+        pass
 
 
 class JwtAlgorithm(str, Enum):
@@ -352,32 +264,11 @@ class JwtKey(BaseObject):
 
 
 def encode_str_ascii_or_raise(passphrase: str) -> bytes:
-    try:
-        return passphrase.encode('ascii')
-    except UnicodeError as unicode_error:
-        raise TypeError(
-            "private_key and private_key_passphrase must contain binary data (bytes/str), not a text/unicode string"
-        ) from unicode_error
+    pass
 
 
 def create_jwt_assertion(claims: dict, key: JwtKey, options: JwtSignOptions) -> str:
-    if jwt is None:
-        raise ImportError(
-            'Missing `PyJWT` dependency. `PyJWT` library is required to create JWT assertion.'
-        )
-    return jwt.encode(
-        {
-            'iss': options.issuer,
-            'sub': options.subject,
-            'box_sub_type': claims['box_sub_type'],
-            'aud': options.audience,
-            'jti': options.jwtid,
-            'exp': claims['exp'],
-        },
-        options.private_key_decryptor.decrypt_private_key(key.key, key.passphrase),
-        algorithm=options.algorithm,
-        headers={'kid': options.keyid},
-    )
+    pass
 
 
 Date = datetime.date
@@ -385,60 +276,39 @@ DateTime = datetime.datetime
 
 
 def date_to_string(date: Date) -> str:
-    return date.isoformat()
+    pass
 
 
 def date_from_string(date: str) -> Date:
-    return Date.fromisoformat(date)
+    pass
 
 
 def date_time_to_string(date_time: DateTime) -> str:
-    return date_time.isoformat().replace('+00:00', 'Z')
+    pass
 
 
 def date_time_from_string(date_time: str) -> DateTime:
-    return DateTime.fromisoformat(date_time.replace('Z', '+00:00'))
+    pass
 
 
 def date_time_to_epoch_seconds(date_time: DateTime) -> int:
-    return int(date_time.timestamp())
+    pass
 
 
 def epoch_seconds_to_date_time(epoch_seconds: int) -> DateTime:
-    return DateTime.fromtimestamp(epoch_seconds, datetime.timezone.utc)
+    pass
 
 
 def delay_in_seconds(seconds: int):
-    time.sleep(seconds)
+    pass
 
 
 def create_null():
-    return null
+    pass
 
 
 def escape_unicode(value: str) -> str:
-    def replace_char(match):
-        char = match.group(0)
-        code_point = ord(char)
-        if char == '\n':
-            return '\\n'
-        elif char == '\r':
-            return '\\r'
-        elif char == '\t':
-            return '\\t'
-        elif code_point <= 0xFFFF:  # Basic Multilingual Plane (BMP)
-            return f"\\u{code_point:04x}"
-        else:  # Supplementary Plane (Surrogate Pair)
-            code_point -= 0x10000
-            high_surrogate = 0xD800 + (code_point >> 10)
-            low_surrogate = 0xDC00 + (code_point & 0x3FF)
-            return f"\\u{high_surrogate:04x}\\u{low_surrogate:04x}"
-
-    # Replace any backslashes that are NOT part of a \/ with double backslash
-    temp = re.sub(r'\\(?!/)', r'\\\\', value)
-
-    # Match special characters, non-ASCII characters
-    return re.sub(r'[^\x20-\x7e]|[\n\r\t]', replace_char, temp)
+    pass
 
 
 def compute_webhook_signature(
@@ -461,41 +331,20 @@ def compute_webhook_signature(
     :return:
         An Hmac signature.
     """
-    if signature_key is None:
-        return None
-    if headers.get('box-signature-version') != '1':
-        return None
-    if headers.get('box-signature-algorithm') != 'HmacSHA256':
-        return None
-
-    encoded_body = (escape_unicode(body) if escape_body else body).encode('utf-8')
-    encoded_signature_key = signature_key.encode('utf-8')
-    encoded_delivery_time_stamp = headers.get('box-delivery-timestamp').encode('utf-8')
-    new_hmac = hmac.new(encoded_signature_key, digestmod=hashlib.sha256)
-    new_hmac.update(encoded_body)
-    new_hmac.update(encoded_delivery_time_stamp)
-    signature = base64.b64encode(new_hmac.digest()).decode()
-    return signature
+    pass
 
 
 def compare_signatures(
     expected_signature: Optional[str], received_signature: Optional[str]
 ) -> bool:
-    if not expected_signature or not received_signature:
-        return False
-    if len(expected_signature) != len(received_signature):
-        return False
-    return hmac.compare_digest(expected_signature, received_signature)
+    pass
 
 
 def random(min: float, max: float) -> float:
-    return uniform(min, max)
+    pass
 
 
 def sanitize_map(
     dictionary: Dict[str, str], keys_to_sanitize: Dict[str, str]
 ) -> Dict[str, str]:
-    return {
-        k: sanitized_value() if k.lower() in keys_to_sanitize else v
-        for k, v in dictionary.items()
-    }
+    pass

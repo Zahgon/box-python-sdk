@@ -46,21 +46,7 @@ class RequestInfo:
         self.body = body
 
     def print(self, data_sanitizer: DataSanitizer):
-        return ''.join(
-            (
-                f'\n\tMethod: {self.method}',
-                f'\n\tURL: {self.url}',
-                f'\n\tQuery params: \n{pprint.pformat(self.query_params, indent=8)}',
-                f'\n\tHeaders: \n{pprint.pformat(data_sanitizer.sanitize_headers(self.headers), indent=8)}',
-                ''.join(
-                    [
-                        '\n\tBody: ',
-                        '\n' if self.body else '',
-                        pprint.pformat(self.body, indent=8),
-                    ]
-                ),
-            )
-        )
+        pass
 
 
 class ResponseInfo:
@@ -85,25 +71,7 @@ class ResponseInfo:
         self.help_url = help_url
 
     def print(self, data_sanitizer: DataSanitizer):
-        return ''.join(
-            (
-                f'\n\tStatus code: {self.status_code}',
-                f'\n\tHeaders: \n{pprint.pformat(data_sanitizer.sanitize_headers(self.headers), indent=8)}',
-                f'\n\tCode: {self.code}',
-                f'\n\tContext Info: \n{pprint.pformat(self.context_info, indent=8)}',
-                f'\n\tRequest Id: {self.request_id}',
-                f'\n\tHelp Url: {self.help_url}',
-                ''.join(
-                    [
-                        '\n\tBody: ',
-                        '\n' if self.body else '',
-                        pprint.pformat(
-                            data_sanitizer.sanitize_body(self.body), indent=8
-                        ),
-                    ]
-                ),
-            )
-        )
+        pass
 
 
 class BoxAPIError(BoxSDKError):

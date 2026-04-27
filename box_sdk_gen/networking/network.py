@@ -62,15 +62,7 @@ class NetworkSession:
         :param additional_headers: Dict of headers, which are appended to each API request
         :return: a new instance of NetworkSession
         """
-        return NetworkSession(
-            network_client=self.network_client,
-            additional_headers={**self.additional_headers, **additional_headers},
-            base_urls=self.base_urls,
-            proxy_url=self.proxy_url,
-            retry_strategy=self.retry_strategy,
-            data_sanitizer=self.data_sanitizer,
-            timeout_config=self.timeout_config,
-        )
+        pass
 
     def with_custom_base_urls(self, base_urls: BaseUrls) -> 'NetworkSession':
         """
@@ -79,15 +71,7 @@ class NetworkSession:
         :param base_urls: Dict of base urls, which are appended to each API request
         :return: a new instance of NetworkSession
         """
-        return NetworkSession(
-            network_client=self.network_client,
-            additional_headers=self.additional_headers,
-            base_urls=base_urls,
-            proxy_url=self.proxy_url,
-            retry_strategy=self.retry_strategy,
-            data_sanitizer=self.data_sanitizer,
-            timeout_config=self.timeout_config,
-        )
+        pass
 
     def with_proxy(self, config: ProxyConfig) -> 'NetworkSession':
         """
@@ -96,25 +80,7 @@ class NetworkSession:
         :param config: ProxyConfig object, which contains the proxy url, username, and password
         :return: a new instance of NetworkSession
         """
-        if not config.url or not config.url.startswith("http"):
-            raise ValueError("Invalid proxy URL provided")
-
-        proxy_host = config.url.split("//")[1]
-        proxy_auth = (
-            f"{config.username}:{config.password}@"
-            if config.username and config.password
-            else ""
-        )
-        proxy_url = f"http://{proxy_auth}{proxy_host}"
-        return NetworkSession(
-            network_client=self.network_client,
-            additional_headers=self.additional_headers,
-            base_urls=self.base_urls,
-            proxy_url=proxy_url,
-            retry_strategy=self.retry_strategy,
-            data_sanitizer=self.data_sanitizer,
-            timeout_config=self.timeout_config,
-        )
+        pass
 
     def with_network_client(self, network_client: NetworkClient) -> 'NetworkSession':
         """
@@ -123,15 +89,7 @@ class NetworkSession:
         :param network_client: NetworkClient object, which contains the fetch method
         :return: a new instance of NetworkSession
         """
-        return NetworkSession(
-            network_client=network_client,
-            additional_headers=self.additional_headers,
-            base_urls=self.base_urls,
-            proxy_url=self.proxy_url,
-            retry_strategy=self.retry_strategy,
-            data_sanitizer=self.data_sanitizer,
-            timeout_config=self.timeout_config,
-        )
+        pass
 
     def with_retry_strategy(self, retry_strategy: RetryStrategy) -> 'NetworkSession':
         """
@@ -140,15 +98,7 @@ class NetworkSession:
         :param retry_strategy: RetryStrategy object, which contains the retry logic
         :return: a new instance of NetworkSession
         """
-        return NetworkSession(
-            network_client=self.network_client,
-            additional_headers=self.additional_headers,
-            base_urls=self.base_urls,
-            proxy_url=self.proxy_url,
-            retry_strategy=retry_strategy,
-            data_sanitizer=self.data_sanitizer,
-            timeout_config=self.timeout_config,
-        )
+        pass
 
     def with_data_sanitizer(self, data_sanitizer: DataSanitizer) -> 'NetworkSession':
         """
@@ -157,15 +107,7 @@ class NetworkSession:
         :param data_sanitizer:
         :return:
         """
-        return NetworkSession(
-            network_client=self.network_client,
-            additional_headers=self.additional_headers,
-            base_urls=self.base_urls,
-            proxy_url=self.proxy_url,
-            retry_strategy=self.retry_strategy,
-            data_sanitizer=data_sanitizer,
-            timeout_config=self.timeout_config,
-        )
+        pass
 
     def with_timeout_config(self, timeout_config: TimeoutConfig) -> 'NetworkSession':
         """
@@ -174,12 +116,4 @@ class NetworkSession:
         :param timeout_config: TimeoutConfig object, which contains the timeout config
         :return: a new instance of NetworkSession
         """
-        return NetworkSession(
-            network_client=self.network_client,
-            additional_headers=self.additional_headers,
-            base_urls=self.base_urls,
-            proxy_url=self.proxy_url,
-            retry_strategy=self.retry_strategy,
-            data_sanitizer=self.data_sanitizer,
-            timeout_config=timeout_config,
-        )
+        pass

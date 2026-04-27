@@ -92,30 +92,7 @@ class SignRequestsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {'reason': reason}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/sign_requests/',
-                        to_string(sign_request_id),
-                        '/cancel',
-                    ]
-                ),
-                method='POST',
-                headers=headers_map,
-                data=serialize(request_body) if not request_body == None else None,
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, SignRequest)
+        pass
 
     def resend_sign_request(
         self,
@@ -131,27 +108,7 @@ class SignRequestsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/sign_requests/',
-                        to_string(sign_request_id),
-                        '/resend',
-                    ]
-                ),
-                method='POST',
-                headers=headers_map,
-                response_format=ResponseFormat.NO_CONTENT,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return None
+        pass
 
     def get_sign_request_by_id(
         self,
@@ -167,26 +124,7 @@ class SignRequestsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/sign_requests/',
-                        to_string(sign_request_id),
-                    ]
-                ),
-                method='GET',
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, SignRequest)
+        pass
 
     def get_sign_requests(
         self,
@@ -220,31 +158,7 @@ class SignRequestsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'marker': to_string(marker),
-                'limit': to_string(limit),
-                'senders': to_string(senders),
-                'shared_requests': to_string(shared_requests),
-            }
-        )
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [self.network_session.base_urls.base_url, '/2.0/sign_requests']
-                ),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, SignRequests)
+        pass
 
     def create_sign_request(
         self,
@@ -317,40 +231,4 @@ class SignRequestsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {
-            'source_files': source_files,
-            'signature_color': signature_color,
-            'signers': signers,
-            'parent_folder': parent_folder,
-            'is_document_preparation_needed': is_document_preparation_needed,
-            'redirect_url': redirect_url,
-            'declined_redirect_url': declined_redirect_url,
-            'are_text_signatures_enabled': are_text_signatures_enabled,
-            'email_subject': email_subject,
-            'email_message': email_message,
-            'are_reminders_enabled': are_reminders_enabled,
-            'name': name,
-            'prefill_tags': prefill_tags,
-            'days_valid': days_valid,
-            'external_id': external_id,
-            'template_id': template_id,
-            'external_system_name': external_system_name,
-        }
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [self.network_session.base_urls.base_url, '/2.0/sign_requests']
-                ),
-                method='POST',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, SignRequest)
+        pass

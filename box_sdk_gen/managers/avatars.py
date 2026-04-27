@@ -58,27 +58,7 @@ class AvatarsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/users/',
-                        to_string(user_id),
-                        '/avatar',
-                    ]
-                ),
-                method='GET',
-                headers=headers_map,
-                response_format=ResponseFormat.BINARY,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return response.content
+        pass
 
     def create_user_avatar(
         self,
@@ -101,41 +81,7 @@ class AvatarsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {
-            'pic': pic,
-            'pic_file_name': pic_file_name,
-            'pic_content_type': pic_content_type,
-        }
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/users/',
-                        to_string(user_id),
-                        '/avatar',
-                    ]
-                ),
-                method='POST',
-                headers=headers_map,
-                multipart_data=[
-                    MultipartItem(
-                        part_name='pic',
-                        file_stream=pic,
-                        file_name=pic_file_name,
-                        content_type=pic_content_type,
-                    )
-                ],
-                content_type='multipart/form-data',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, UserAvatar)
+        pass
 
     def delete_user_avatar(
         self, user_id: str, *, extra_headers: Optional[Dict[str, Optional[str]]] = None
@@ -151,24 +97,4 @@ class AvatarsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/users/',
-                        to_string(user_id),
-                        '/avatar',
-                    ]
-                ),
-                method='DELETE',
-                headers=headers_map,
-                response_format=ResponseFormat.NO_CONTENT,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return None
+        pass

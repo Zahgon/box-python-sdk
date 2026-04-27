@@ -25,7 +25,7 @@ class DataSanitizer:
         }
 
     def sanitize_headers(self, headers: Dict[str, str]) -> Dict[str, str]:
-        return sanitize_map(headers, self._keys_to_sanitize)
+        pass
 
     def sanitize_body(self, body: SerializedData) -> SerializedData:
-        return sanitize_serialized_data(body, self._keys_to_sanitize)
+        pass

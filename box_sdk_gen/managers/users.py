@@ -190,33 +190,7 @@ class UsersManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'filter_term': to_string(filter_term),
-                'user_type': to_string(user_type),
-                'external_app_user_id': to_string(external_app_user_id),
-                'fields': to_string(fields),
-                'offset': to_string(offset),
-                'limit': to_string(limit),
-                'usemarker': to_string(usemarker),
-                'marker': to_string(marker),
-            }
-        )
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join([self.network_session.base_urls.base_url, '/2.0/users']),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, Users)
+        pass
 
     def create_user(
         self,
@@ -259,20 +233,20 @@ class UsersManager:
                 :type login: Optional[str], optional
                 :param is_platform_access_only: Specifies that the user is an app user., defaults to None
                 :type is_platform_access_only: Optional[bool], optional
-                :param role: The user’s enterprise role., defaults to None
+                :param role: The userâ€™s enterprise role., defaults to None
                 :type role: Optional[CreateUserRole], optional
                 :param language: The language of the user, formatted in modified version of the
         [ISO 639-1](https://developer.box.com/guides/api-calls/language-codes) format., defaults to None
                 :type language: Optional[str], optional
                 :param is_sync_enabled: Whether the user can use Box Sync., defaults to None
                 :type is_sync_enabled: Optional[bool], optional
-                :param job_title: The user’s job title., defaults to None
+                :param job_title: The userâ€™s job title., defaults to None
                 :type job_title: Optional[str], optional
-                :param phone: The user’s phone number., defaults to None
+                :param phone: The userâ€™s phone number., defaults to None
                 :type phone: Optional[str], optional
-                :param address: The user’s address., defaults to None
+                :param address: The userâ€™s address., defaults to None
                 :type address: Optional[str], optional
-                :param space_amount: The user’s total available space in bytes. Set this to `-1` to
+                :param space_amount: The userâ€™s total available space in bytes. Set this to `-1` to
         indicate unlimited storage., defaults to None
                 :type space_amount: Optional[int], optional
                 :param tracking_codes: Tracking codes allow an admin to generate reports from the
@@ -311,44 +285,7 @@ class UsersManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {
-            'name': name,
-            'login': login,
-            'is_platform_access_only': is_platform_access_only,
-            'role': role,
-            'language': language,
-            'is_sync_enabled': is_sync_enabled,
-            'job_title': job_title,
-            'phone': phone,
-            'address': address,
-            'space_amount': space_amount,
-            'tracking_codes': tracking_codes,
-            'can_see_managed_users': can_see_managed_users,
-            'timezone': timezone,
-            'is_external_collab_restricted': is_external_collab_restricted,
-            'is_exempt_from_device_limits': is_exempt_from_device_limits,
-            'is_exempt_from_login_verification': is_exempt_from_login_verification,
-            'status': status,
-            'external_app_user_id': external_app_user_id,
-        }
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join([self.network_session.base_urls.base_url, '/2.0/users']),
-                method='POST',
-                params=query_params_map,
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, UserFull)
+        pass
 
     def get_user_me(
         self,
@@ -389,22 +326,7 @@ class UsersManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join([self.network_session.base_urls.base_url, '/2.0/users/me']),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, UserFull)
+        pass
 
     def get_user_by_id(
         self,
@@ -455,28 +377,7 @@ class UsersManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/users/',
-                        to_string(user_id),
-                    ]
-                ),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, UserFull)
+        pass
 
     def update_user_by_id(
         self,
@@ -532,18 +433,18 @@ class UsersManager:
         Note: If the target user's email is not confirmed, then the
         primary login address cannot be changed., defaults to None
                 :type login: Optional[str], optional
-                :param role: The user’s enterprise role., defaults to None
+                :param role: The userâ€™s enterprise role., defaults to None
                 :type role: Optional[UpdateUserByIdRole], optional
                 :param language: The language of the user, formatted in modified version of the
         [ISO 639-1](https://developer.box.com/guides/api-calls/language-codes) format., defaults to None
                 :type language: Optional[str], optional
                 :param is_sync_enabled: Whether the user can use Box Sync., defaults to None
                 :type is_sync_enabled: Optional[bool], optional
-                :param job_title: The user’s job title., defaults to None
+                :param job_title: The userâ€™s job title., defaults to None
                 :type job_title: Optional[str], optional
-                :param phone: The user’s phone number., defaults to None
+                :param phone: The userâ€™s phone number., defaults to None
                 :type phone: Optional[str], optional
-                :param address: The user’s address., defaults to None
+                :param address: The userâ€™s address., defaults to None
                 :type address: Optional[str], optional
                 :param tracking_codes: Tracking codes allow an admin to generate reports from the
         admin console and assign an attribute to a specific group
@@ -566,7 +467,7 @@ class UsersManager:
                 :type is_password_reset_required: Optional[bool], optional
                 :param status: The user's account status., defaults to None
                 :type status: Optional[UpdateUserByIdStatus], optional
-                :param space_amount: The user’s total available space in bytes. Set this to `-1` to
+                :param space_amount: The userâ€™s total available space in bytes. Set this to `-1` to
         indicate unlimited storage., defaults to None
                 :type space_amount: Optional[int], optional
                 :param notification_email: An alternate notification email address to which email
@@ -596,53 +497,7 @@ class UsersManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {
-            'enterprise': enterprise,
-            'notify': notify,
-            'name': name,
-            'login': login,
-            'role': role,
-            'language': language,
-            'is_sync_enabled': is_sync_enabled,
-            'job_title': job_title,
-            'phone': phone,
-            'address': address,
-            'tracking_codes': tracking_codes,
-            'can_see_managed_users': can_see_managed_users,
-            'timezone': timezone,
-            'is_external_collab_restricted': is_external_collab_restricted,
-            'is_exempt_from_device_limits': is_exempt_from_device_limits,
-            'is_exempt_from_login_verification': is_exempt_from_login_verification,
-            'is_password_reset_required': is_password_reset_required,
-            'status': status,
-            'space_amount': space_amount,
-            'notification_email': notification_email,
-            'external_app_user_id': external_app_user_id,
-        }
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/users/',
-                        to_string(user_id),
-                    ]
-                ),
-                method='PUT',
-                params=query_params_map,
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, UserFull)
+        pass
 
     def delete_user_by_id(
         self,
@@ -674,27 +529,4 @@ class UsersManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'notify': to_string(notify), 'force': to_string(force)}
-        )
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/users/',
-                        to_string(user_id),
-                    ]
-                ),
-                method='DELETE',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.NO_CONTENT,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return None
+        pass

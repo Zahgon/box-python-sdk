@@ -54,10 +54,7 @@ class BoxDeveloperTokenAuth(Authentication):
         :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
-        token: Optional[AccessToken] = self.token_storage.get()
-        if token == None:
-            raise BoxSDKError(message='No access token is available.')
-        return token
+        pass
 
     def refresh_token(
         self, *, network_session: Optional[NetworkSession] = None
@@ -74,8 +71,7 @@ class BoxDeveloperTokenAuth(Authentication):
     def retrieve_authorization_header(
         self, *, network_session: Optional[NetworkSession] = None
     ) -> str:
-        token: AccessToken = self.retrieve_token(network_session=network_session)
-        return ''.join(['Bearer ', token.access_token])
+        pass
 
     def revoke_token(self, *, network_session: Optional[NetworkSession] = None) -> None:
         """
@@ -83,21 +79,7 @@ class BoxDeveloperTokenAuth(Authentication):
         :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
-        token: Optional[AccessToken] = self.token_storage.get()
-        if token == None:
-            return None
-        auth_manager: AuthorizationManager = AuthorizationManager(
-            network_session=(
-                network_session if not network_session == None else NetworkSession()
-            )
-        )
-        auth_manager.revoke_access_token(
-            client_id=self.config.client_id,
-            client_secret=self.config.client_secret,
-            token=token.access_token,
-        )
-        self.token_storage.clear()
-        return None
+        pass
 
     def downscope_token(
         self,
@@ -118,22 +100,4 @@ class BoxDeveloperTokenAuth(Authentication):
         :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
-        token: Optional[AccessToken] = self.retrieve_token(
-            network_session=network_session
-        )
-        if token == None or token.access_token == None:
-            raise BoxSDKError(message='No access token is available.')
-        auth_manager: AuthorizationManager = AuthorizationManager(
-            network_session=(
-                network_session if not network_session == None else NetworkSession()
-            )
-        )
-        downscoped_token: AccessToken = auth_manager.request_access_token(
-            PostOAuth2TokenGrantTypeField.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE,
-            subject_token=token.access_token,
-            subject_token_type=PostOAuth2TokenSubjectTokenTypeField.URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN,
-            resource=resource,
-            scope=' '.join(scopes),
-            box_shared_link=shared_link,
-        )
-        return downscoped_token
+        pass

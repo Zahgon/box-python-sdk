@@ -158,30 +158,7 @@ class AuthorizationManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'response_type': to_string(response_type),
-                'client_id': to_string(client_id),
-                'redirect_uri': to_string(redirect_uri),
-                'state': to_string(state),
-                'scope': to_string(scope),
-            }
-        )
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join([self.network_session.base_urls.oauth_2_url, '/authorize']),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.NO_CONTENT,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return None
+        pass
 
     def request_access_token(
         self,
@@ -304,39 +281,7 @@ class AuthorizationManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {
-            'grant_type': grant_type,
-            'client_id': client_id,
-            'client_secret': client_secret,
-            'code': code,
-            'refresh_token': refresh_token,
-            'assertion': assertion,
-            'subject_token': subject_token,
-            'subject_token_type': subject_token_type,
-            'actor_token': actor_token,
-            'actor_token_type': actor_token_type,
-            'scope': scope,
-            'resource': resource,
-            'box_subject_type': box_subject_type,
-            'box_subject_id': box_subject_id,
-            'box_shared_link': box_shared_link,
-        }
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join([self.network_session.base_urls.base_url, '/oauth2/token']),
-                method='POST',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/x-www-form-urlencoded',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, AccessToken)
+        pass
 
     def refresh_access_token(
         self,
@@ -360,30 +305,7 @@ class AuthorizationManager:
         :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {
-            'grant_type': grant_type,
-            'client_id': client_id,
-            'client_secret': client_secret,
-            'refresh_token': refresh_token,
-        }
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [self.network_session.base_urls.base_url, '/oauth2/token#refresh']
-                ),
-                method='POST',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/x-www-form-urlencoded',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, AccessToken)
+        pass
 
     def revoke_access_token(
         self,
@@ -409,26 +331,4 @@ class AuthorizationManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {
-            'client_id': client_id,
-            'client_secret': client_secret,
-            'token': token,
-        }
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [self.network_session.base_urls.base_url, '/oauth2/revoke']
-                ),
-                method='POST',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/x-www-form-urlencoded',
-                response_format=ResponseFormat.NO_CONTENT,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return None
+        pass

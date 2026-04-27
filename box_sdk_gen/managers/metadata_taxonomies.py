@@ -84,32 +84,7 @@ class MetadataTaxonomiesManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {
-            'key': key,
-            'displayName': display_name,
-            'namespace': namespace,
-        }
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/metadata_taxonomies',
-                    ]
-                ),
-                method='POST',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, MetadataTaxonomy)
+        pass
 
     def get_metadata_taxonomies(
         self,
@@ -134,30 +109,7 @@ class MetadataTaxonomiesManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'marker': to_string(marker), 'limit': to_string(limit)}
-        )
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/metadata_taxonomies/',
-                        to_string(namespace),
-                    ]
-                ),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, MetadataTaxonomies)
+        pass
 
     def get_metadata_taxonomy_by_key(
         self,
@@ -177,28 +129,7 @@ class MetadataTaxonomiesManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/metadata_taxonomies/',
-                        to_string(namespace),
-                        '/',
-                        to_string(taxonomy_key),
-                    ]
-                ),
-                method='GET',
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, MetadataTaxonomy)
+        pass
 
     def update_metadata_taxonomy(
         self,
@@ -221,31 +152,7 @@ class MetadataTaxonomiesManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {'displayName': display_name}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/metadata_taxonomies/',
-                        to_string(namespace),
-                        '/',
-                        to_string(taxonomy_key),
-                    ]
-                ),
-                method='PATCH',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, MetadataTaxonomy)
+        pass
 
     def delete_metadata_taxonomy(
         self,
@@ -268,28 +175,7 @@ class MetadataTaxonomiesManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/metadata_taxonomies/',
-                        to_string(namespace),
-                        '/',
-                        to_string(taxonomy_key),
-                    ]
-                ),
-                method='DELETE',
-                headers=headers_map,
-                response_format=ResponseFormat.NO_CONTENT,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return None
+        pass
 
     def create_metadata_taxonomy_level(
         self,
@@ -312,31 +198,7 @@ class MetadataTaxonomiesManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/metadata_taxonomies/',
-                        to_string(namespace),
-                        '/',
-                        to_string(taxonomy_key),
-                        '/levels',
-                    ]
-                ),
-                method='POST',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, MetadataTaxonomyLevels)
+        pass
 
     def update_metadata_taxonomy_level_by_id(
         self,
@@ -366,33 +228,7 @@ class MetadataTaxonomiesManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {'displayName': display_name, 'description': description}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/metadata_taxonomies/',
-                        to_string(namespace),
-                        '/',
-                        to_string(taxonomy_key),
-                        '/levels/',
-                        to_string(level_index),
-                    ]
-                ),
-                method='PATCH',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, MetadataTaxonomyLevel)
+        pass
 
     def add_metadata_taxonomy_level(
         self,
@@ -421,32 +257,7 @@ class MetadataTaxonomiesManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {'displayName': display_name, 'description': description}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/metadata_taxonomies/',
-                        to_string(namespace),
-                        '/',
-                        to_string(taxonomy_key),
-                        '/levels:append',
-                    ]
-                ),
-                method='POST',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, MetadataTaxonomyLevels)
+        pass
 
     def delete_metadata_taxonomy_level(
         self,
@@ -466,29 +277,7 @@ class MetadataTaxonomiesManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/metadata_taxonomies/',
-                        to_string(namespace),
-                        '/',
-                        to_string(taxonomy_key),
-                        '/levels:trim',
-                    ]
-                ),
-                method='POST',
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, MetadataTaxonomyLevels)
+        pass
 
     def get_metadata_taxonomy_nodes(
         self,
@@ -542,41 +331,7 @@ class MetadataTaxonomiesManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'level': to_string(level),
-                'parent': to_string(parent),
-                'ancestor': to_string(ancestor),
-                'query': to_string(query),
-                'include-total-result-count': to_string(include_total_result_count),
-                'marker': to_string(marker),
-                'limit': to_string(limit),
-            }
-        )
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/metadata_taxonomies/',
-                        to_string(namespace),
-                        '/',
-                        to_string(taxonomy_key),
-                        '/nodes',
-                    ]
-                ),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, MetadataTaxonomyNodes)
+        pass
 
     def create_metadata_taxonomy_node(
         self,
@@ -606,36 +361,7 @@ class MetadataTaxonomiesManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {
-            'displayName': display_name,
-            'level': level,
-            'parentId': parent_id,
-        }
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/metadata_taxonomies/',
-                        to_string(namespace),
-                        '/',
-                        to_string(taxonomy_key),
-                        '/nodes',
-                    ]
-                ),
-                method='POST',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, MetadataTaxonomyNode)
+        pass
 
     def get_metadata_taxonomy_node_by_id(
         self,
@@ -659,30 +385,7 @@ class MetadataTaxonomiesManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/metadata_taxonomies/',
-                        to_string(namespace),
-                        '/',
-                        to_string(taxonomy_key),
-                        '/nodes/',
-                        to_string(node_id),
-                    ]
-                ),
-                method='GET',
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, MetadataTaxonomyNode)
+        pass
 
     def update_metadata_taxonomy_node(
         self,
@@ -709,33 +412,7 @@ class MetadataTaxonomiesManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {'displayName': display_name}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/metadata_taxonomies/',
-                        to_string(namespace),
-                        '/',
-                        to_string(taxonomy_key),
-                        '/nodes/',
-                        to_string(node_id),
-                    ]
-                ),
-                method='PATCH',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, MetadataTaxonomyNode)
+        pass
 
     def delete_metadata_taxonomy_node(
         self,
@@ -765,30 +442,7 @@ class MetadataTaxonomiesManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/metadata_taxonomies/',
-                        to_string(namespace),
-                        '/',
-                        to_string(taxonomy_key),
-                        '/nodes/',
-                        to_string(node_id),
-                    ]
-                ),
-                method='DELETE',
-                headers=headers_map,
-                response_format=ResponseFormat.NO_CONTENT,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return None
+        pass
 
     def get_metadata_template_field_options(
         self,
@@ -854,41 +508,4 @@ class MetadataTaxonomiesManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'level': to_string(level),
-                'parent': to_string(parent),
-                'ancestor': to_string(ancestor),
-                'query': to_string(query),
-                'include-total-result-count': to_string(include_total_result_count),
-                'only-selectable-options': to_string(only_selectable_options),
-                'marker': to_string(marker),
-                'limit': to_string(limit),
-            }
-        )
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/metadata_templates/',
-                        to_string(namespace),
-                        '/',
-                        to_string(template_key),
-                        '/fields/',
-                        to_string(field_key),
-                        '/options',
-                    ]
-                ),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, MetadataTaxonomyNodes)
+        pass

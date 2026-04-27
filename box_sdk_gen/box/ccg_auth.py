@@ -86,20 +86,7 @@ class BoxCCGAuth(Authentication):
         :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
-        auth_manager: AuthorizationManager = AuthorizationManager(
-            network_session=(
-                network_session if not network_session == None else NetworkSession()
-            )
-        )
-        token: AccessToken = auth_manager.request_access_token(
-            PostOAuth2TokenGrantTypeField.CLIENT_CREDENTIALS,
-            client_id=self.config.client_id,
-            client_secret=self.config.client_secret,
-            box_subject_type=self.subject_type,
-            box_subject_id=self.subject_id,
-        )
-        self.token_storage.store(token)
-        return token
+        pass
 
     def retrieve_token(
         self, *, network_session: Optional[NetworkSession] = None
@@ -109,17 +96,12 @@ class BoxCCGAuth(Authentication):
         :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
-        old_token: Optional[AccessToken] = self.token_storage.get()
-        if old_token == None:
-            new_token: AccessToken = self.refresh_token(network_session=network_session)
-            return new_token
-        return old_token
+        pass
 
     def retrieve_authorization_header(
         self, *, network_session: Optional[NetworkSession] = None
     ) -> str:
-        token: AccessToken = self.retrieve_token(network_session=network_session)
-        return ''.join(['Bearer ', token.access_token])
+        pass
 
     def with_user_subject(
         self, user_id: str, *, token_storage: TokenStorage = None
@@ -140,16 +122,7 @@ class BoxCCGAuth(Authentication):
         :param token_storage: Object responsible for storing token in newly created BoxCCGAuth. If no custom implementation provided, the token will be stored in memory., defaults to None
         :type token_storage: TokenStorage, optional
         """
-        if token_storage is None:
-            token_storage = InMemoryTokenStorage()
-        new_config: CCGConfig = CCGConfig(
-            client_id=self.config.client_id,
-            client_secret=self.config.client_secret,
-            enterprise_id=self.config.enterprise_id,
-            user_id=user_id,
-            token_storage=token_storage,
-        )
-        return BoxCCGAuth(config=new_config)
+        pass
 
     def with_enterprise_subject(
         self, enterprise_id: str, *, token_storage: TokenStorage = None
@@ -161,16 +134,7 @@ class BoxCCGAuth(Authentication):
         :param token_storage: Object responsible for storing token in newly created BoxCCGAuth. If no custom implementation provided, the token will be stored in memory., defaults to None
         :type token_storage: TokenStorage, optional
         """
-        if token_storage is None:
-            token_storage = InMemoryTokenStorage()
-        new_config: CCGConfig = CCGConfig(
-            client_id=self.config.client_id,
-            client_secret=self.config.client_secret,
-            enterprise_id=enterprise_id,
-            user_id=None,
-            token_storage=token_storage,
-        )
-        return BoxCCGAuth(config=new_config)
+        pass
 
     def downscope_token(
         self,
@@ -191,27 +155,7 @@ class BoxCCGAuth(Authentication):
         :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
-        token: Optional[AccessToken] = self.retrieve_token(
-            network_session=network_session
-        )
-        if token == None:
-            raise BoxSDKError(
-                message='No access token is available. Make an API call to retrieve a token before calling this method.'
-            )
-        auth_manager: AuthorizationManager = AuthorizationManager(
-            network_session=(
-                network_session if not network_session == None else NetworkSession()
-            )
-        )
-        downscoped_token: AccessToken = auth_manager.request_access_token(
-            PostOAuth2TokenGrantTypeField.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE,
-            subject_token=token.access_token,
-            subject_token_type=PostOAuth2TokenSubjectTokenTypeField.URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN,
-            resource=resource,
-            scope=' '.join(scopes),
-            box_shared_link=shared_link,
-        )
-        return downscoped_token
+        pass
 
     def revoke_token(self, *, network_session: Optional[NetworkSession] = None) -> None:
         """
@@ -219,18 +163,4 @@ class BoxCCGAuth(Authentication):
         :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
-        old_token: Optional[AccessToken] = self.token_storage.get()
-        if old_token == None:
-            return None
-        auth_manager: AuthorizationManager = AuthorizationManager(
-            network_session=(
-                network_session if not network_session == None else NetworkSession()
-            )
-        )
-        auth_manager.revoke_access_token(
-            client_id=self.config.client_id,
-            client_secret=self.config.client_secret,
-            token=old_token.access_token,
-        )
-        self.token_storage.clear()
-        return None
+        pass

@@ -242,24 +242,7 @@ class WebhooksManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'marker': to_string(marker), 'limit': to_string(limit)}
-        )
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join([self.network_session.base_urls.base_url, '/2.0/webhooks']),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, Webhooks)
+        pass
 
     def create_webhook(
         self,
@@ -281,27 +264,7 @@ class WebhooksManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {
-            'target': target,
-            'address': address,
-            'triggers': triggers,
-        }
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join([self.network_session.base_urls.base_url, '/2.0/webhooks']),
-                method='POST',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, Webhook)
+        pass
 
     def get_webhook_by_id(
         self,
@@ -317,26 +280,7 @@ class WebhooksManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/webhooks/',
-                        to_string(webhook_id),
-                    ]
-                ),
-                method='GET',
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, Webhook)
+        pass
 
     def update_webhook_by_id(
         self,
@@ -362,33 +306,7 @@ class WebhooksManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {
-            'target': target,
-            'address': address,
-            'triggers': triggers,
-        }
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/webhooks/',
-                        to_string(webhook_id),
-                    ]
-                ),
-                method='PUT',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, Webhook)
+        pass
 
     def delete_webhook_by_id(
         self,
@@ -404,26 +322,7 @@ class WebhooksManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/webhooks/',
-                        to_string(webhook_id),
-                    ]
-                ),
-                method='DELETE',
-                headers=headers_map,
-                response_format=ResponseFormat.NO_CONTENT,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return None
+        pass
 
     @staticmethod
     def validate_message(
@@ -447,51 +346,4 @@ class WebhooksManager:
         :param max_age: The maximum age of the message in seconds, defaults to 10 minutes, defaults to 600
         :type max_age: Optional[int], optional
         """
-        delivery_timestamp: DateTime = date_time_from_string(
-            headers.get('box-delivery-timestamp')
-        )
-        current_epoch: int = get_epoch_time_in_seconds()
-        if (
-            current_epoch - max_age > date_time_to_epoch_seconds(delivery_timestamp)
-            or date_time_to_epoch_seconds(delivery_timestamp) > current_epoch
-        ):
-            return False
-        if (
-            not primary_key == None and not headers.get('box-signature-primary') == None
-        ) and compare_signatures(
-            expected_signature=compute_webhook_signature(
-                body, headers, primary_key, escape_body=False
-            ),
-            received_signature=headers.get('box-signature-primary'),
-        ):
-            return True
-        if (
-            not primary_key == None and not headers.get('box-signature-primary') == None
-        ) and compare_signatures(
-            expected_signature=compute_webhook_signature(
-                body, headers, primary_key, escape_body=True
-            ),
-            received_signature=headers.get('box-signature-primary'),
-        ):
-            return True
-        if (
-            not secondary_key == None
-            and not headers.get('box-signature-secondary') == None
-        ) and compare_signatures(
-            expected_signature=compute_webhook_signature(
-                body, headers, secondary_key, escape_body=False
-            ),
-            received_signature=headers.get('box-signature-secondary'),
-        ):
-            return True
-        if (
-            not secondary_key == None
-            and not headers.get('box-signature-secondary') == None
-        ) and compare_signatures(
-            expected_signature=compute_webhook_signature(
-                body, headers, secondary_key, escape_body=True
-            ),
-            received_signature=headers.get('box-signature-secondary'),
-        ):
-            return True
-        return False
+        pass

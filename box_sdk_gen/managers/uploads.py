@@ -268,51 +268,7 @@ class UploadsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {
-            'attributes': attributes,
-            'file': file,
-            'file_file_name': file_file_name,
-            'file_content_type': file_content_type,
-        }
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params(
-            {
-                'if-match': to_string(if_match),
-                'content-md5': to_string(content_md_5),
-                **extra_headers,
-            }
-        )
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.upload_url,
-                        '/2.0/files/',
-                        to_string(file_id),
-                        '/content',
-                    ]
-                ),
-                method='POST',
-                params=query_params_map,
-                headers=headers_map,
-                multipart_data=[
-                    MultipartItem(part_name='attributes', data=serialize(attributes)),
-                    MultipartItem(
-                        part_name='file',
-                        file_stream=file,
-                        file_name=file_file_name,
-                        content_type=file_content_type,
-                    ),
-                ],
-                content_type='multipart/form-data',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, Files)
+        pass
 
     def preflight_file_upload_check(
         self,
@@ -334,25 +290,7 @@ class UploadsManager:
         :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {'name': name, 'size': size, 'parent': parent}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [self.network_session.base_urls.base_url, '/2.0/files/content']
-                ),
-                method='OPTIONS',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, UploadUrl)
+        pass
 
     def upload_file(
         self,
@@ -422,42 +360,7 @@ class UploadsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {
-            'attributes': attributes,
-            'file': file,
-            'file_file_name': file_file_name,
-            'file_content_type': file_content_type,
-        }
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params(
-            {'content-md5': to_string(content_md_5), **extra_headers}
-        )
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [self.network_session.base_urls.upload_url, '/2.0/files/content']
-                ),
-                method='POST',
-                params=query_params_map,
-                headers=headers_map,
-                multipart_data=[
-                    MultipartItem(part_name='attributes', data=serialize(attributes)),
-                    MultipartItem(
-                        part_name='file',
-                        file_stream=file,
-                        file_name=file_file_name,
-                        content_type=file_content_type,
-                    ),
-                ],
-                content_type='multipart/form-data',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, Files)
+        pass
 
     def upload_with_preflight_check(
         self,
@@ -499,48 +402,4 @@ class UploadsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {
-            'attributes': attributes,
-            'file': file,
-            'file_file_name': file_file_name,
-            'file_content_type': file_content_type,
-        }
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params(
-            {'content-md5': to_string(content_md_5), **extra_headers}
-        )
-        preflight_upload_url: UploadUrl = self.preflight_file_upload_check(
-            name=attributes.name,
-            size=attributes.size,
-            parent=PreflightFileUploadCheckParent(id=attributes.parent.id),
-            extra_headers=extra_headers,
-        )
-        if (
-            preflight_upload_url.upload_url == None
-            or not 'http' in preflight_upload_url.upload_url
-        ):
-            raise BoxSDKError(message='Unable to get preflight upload URL')
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=preflight_upload_url.upload_url,
-                method='POST',
-                params=query_params_map,
-                headers=headers_map,
-                multipart_data=[
-                    MultipartItem(part_name='attributes', data=serialize(attributes)),
-                    MultipartItem(
-                        part_name='file',
-                        file_stream=file,
-                        file_name=file_file_name,
-                        content_type=file_content_type,
-                    ),
-                ],
-                content_type='multipart/form-data',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, Files)
+        pass

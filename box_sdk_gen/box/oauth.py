@@ -89,31 +89,7 @@ class BoxOAuth(Authentication):
         """
         Get the authorization URL for the app user.
         """
-        if options is None:
-            options = GetAuthorizeUrlOptions()
-        params_map: Dict[str, str] = prepare_params(
-            {
-                'client_id': (
-                    options.client_id
-                    if not options.client_id == None
-                    else self.config.client_id
-                ),
-                'response_type': (
-                    options.response_type
-                    if not options.response_type == None
-                    else 'code'
-                ),
-                'redirect_uri': options.redirect_uri,
-                'state': options.state,
-                'scope': options.scope,
-            }
-        )
-        return ''.join(
-            [
-                'https://account.box.com/api/oauth2/authorize?',
-                sd_to_url_params(serialize(params_map)),
-            ]
-        )
+        pass
 
     def get_tokens_authorization_code_grant(
         self,
@@ -128,19 +104,7 @@ class BoxOAuth(Authentication):
         :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
-        auth_manager: AuthorizationManager = AuthorizationManager(
-            network_session=(
-                network_session if not network_session == None else NetworkSession()
-            )
-        )
-        token: AccessToken = auth_manager.request_access_token(
-            PostOAuth2TokenGrantTypeField.AUTHORIZATION_CODE,
-            code=authorization_code,
-            client_id=self.config.client_id,
-            client_secret=self.config.client_secret,
-        )
-        self.token_storage.store(token)
-        return token
+        pass
 
     def retrieve_token(
         self, *, network_session: Optional[NetworkSession] = None
@@ -150,12 +114,7 @@ class BoxOAuth(Authentication):
         :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
-        token: Optional[AccessToken] = self.token_storage.get()
-        if token == None:
-            raise BoxSDKError(
-                message='Access and refresh tokens not available. Authenticate before making any API call first.'
-            )
-        return token
+        pass
 
     def refresh_token(
         self, *, network_session: Optional[NetworkSession] = None
@@ -165,29 +124,12 @@ class BoxOAuth(Authentication):
         :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
-        old_token: Optional[AccessToken] = self.token_storage.get()
-        token_used_for_refresh: Optional[str] = (
-            old_token.refresh_token if not old_token == None else None
-        )
-        auth_manager: AuthorizationManager = AuthorizationManager(
-            network_session=(
-                network_session if not network_session == None else NetworkSession()
-            )
-        )
-        token: AccessToken = auth_manager.request_access_token(
-            PostOAuth2TokenGrantTypeField.REFRESH_TOKEN,
-            client_id=self.config.client_id,
-            client_secret=self.config.client_secret,
-            refresh_token=token_used_for_refresh,
-        )
-        self.token_storage.store(token)
-        return token
+        pass
 
     def retrieve_authorization_header(
         self, *, network_session: Optional[NetworkSession] = None
     ) -> str:
-        token: AccessToken = self.retrieve_token(network_session=network_session)
-        return ''.join(['Bearer ', token.access_token])
+        pass
 
     def revoke_token(self, *, network_session: Optional[NetworkSession] = None) -> None:
         """
@@ -195,20 +137,7 @@ class BoxOAuth(Authentication):
         :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
-        token: Optional[AccessToken] = self.token_storage.get()
-        if token == None:
-            return None
-        auth_manager: AuthorizationManager = AuthorizationManager(
-            network_session=(
-                network_session if not network_session == None else NetworkSession()
-            )
-        )
-        auth_manager.revoke_access_token(
-            client_id=self.config.client_id,
-            client_secret=self.config.client_secret,
-            token=token.access_token,
-        )
-        return None
+        pass
 
     def downscope_token(
         self,
@@ -229,22 +158,4 @@ class BoxOAuth(Authentication):
         :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
-        token: Optional[AccessToken] = self.retrieve_token(
-            network_session=network_session
-        )
-        if token == None or token.access_token == None:
-            raise BoxSDKError(message='No access token is available.')
-        auth_manager: AuthorizationManager = AuthorizationManager(
-            network_session=(
-                network_session if not network_session == None else NetworkSession()
-            )
-        )
-        downscoped_token: AccessToken = auth_manager.request_access_token(
-            PostOAuth2TokenGrantTypeField.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE,
-            subject_token=token.access_token,
-            subject_token_type=PostOAuth2TokenSubjectTokenTypeField.URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN,
-            resource=resource,
-            scope=' '.join(scopes),
-            box_shared_link=shared_link,
-        )
-        return downscoped_token
+        pass

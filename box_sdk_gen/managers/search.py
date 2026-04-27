@@ -212,37 +212,7 @@ class SearchManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {
-            'from': from_,
-            'query': query,
-            'query_params': query_params,
-            'ancestor_folder_id': ancestor_folder_id,
-            'order_by': order_by,
-            'limit': limit,
-            'marker': marker,
-            'fields': fields,
-        }
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/metadata_queries/execute_read',
-                    ]
-                ),
-                method='POST',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, MetadataQueryResults)
+        pass
 
     def search_for_content(
         self,
@@ -516,43 +486,4 @@ class SearchManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'query': to_string(query),
-                'scope': to_string(scope),
-                'file_extensions': to_string(file_extensions),
-                'created_at_range': to_string(created_at_range),
-                'updated_at_range': to_string(updated_at_range),
-                'size_range': to_string(size_range),
-                'owner_user_ids': to_string(owner_user_ids),
-                'recent_updater_user_ids': to_string(recent_updater_user_ids),
-                'ancestor_folder_ids': to_string(ancestor_folder_ids),
-                'content_types': to_string(content_types),
-                'type': to_string(type),
-                'trash_content': to_string(trash_content),
-                'mdfilters': to_string(mdfilters),
-                'sort': to_string(sort),
-                'direction': to_string(direction),
-                'limit': to_string(limit),
-                'include_recent_shared_links': to_string(include_recent_shared_links),
-                'fields': to_string(fields),
-                'offset': to_string(offset),
-                'deleted_user_ids': to_string(deleted_user_ids),
-                'deleted_at_range': to_string(deleted_at_range),
-            }
-        )
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join([self.network_session.base_urls.base_url, '/2.0/search']),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, SearchResultsResponse)
+        pass

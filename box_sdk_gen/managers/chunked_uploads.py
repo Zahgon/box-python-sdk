@@ -114,32 +114,7 @@ class ChunkedUploadsManager:
         :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {
-            'folder_id': folder_id,
-            'file_size': file_size,
-            'file_name': file_name,
-        }
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.upload_url,
-                        '/2.0/files/upload_sessions',
-                    ]
-                ),
-                method='POST',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, UploadSession)
+        pass
 
     def create_file_upload_session_for_existing_file(
         self,
@@ -167,30 +142,7 @@ class ChunkedUploadsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {'file_size': file_size, 'file_name': file_name}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.upload_url,
-                        '/2.0/files/',
-                        to_string(file_id),
-                        '/upload_sessions',
-                    ]
-                ),
-                method='POST',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, UploadSession)
+        pass
 
     def get_file_upload_session_by_url(
         self, url: str, *, extra_headers: Optional[Dict[str, Optional[str]]] = None
@@ -211,20 +163,7 @@ class ChunkedUploadsManager:
         :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=url,
-                method='GET',
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, UploadSession)
+        pass
 
     def get_file_upload_session_by_id(
         self,
@@ -243,26 +182,7 @@ class ChunkedUploadsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.upload_url,
-                        '/2.0/files/upload_sessions/',
-                        to_string(upload_session_id),
-                    ]
-                ),
-                method='GET',
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, UploadSession)
+        pass
 
     def upload_file_part_by_url(
         self,
@@ -306,7 +226,7 @@ class ChunkedUploadsManager:
                 :param content_range: The byte range of the chunk.
 
         Must not overlap with the range of a part already
-        uploaded this session. Each part’s size must be
+        uploaded this session. Each partâ€™s size must be
         exactly equal in size to the part size specified
         in the upload session that you created.
         One exception is the last part of the file, as this can be smaller.
@@ -320,28 +240,7 @@ class ChunkedUploadsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params(
-            {
-                'digest': to_string(digest),
-                'content-range': to_string(content_range),
-                **extra_headers,
-            }
-        )
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=url,
-                method='PUT',
-                headers=headers_map,
-                file_stream=request_body,
-                content_type='application/octet-stream',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, UploadedPart)
+        pass
 
     def upload_file_part(
         self,
@@ -380,7 +279,7 @@ class ChunkedUploadsManager:
                 :param content_range: The byte range of the chunk.
 
         Must not overlap with the range of a part already
-        uploaded this session. Each part’s size must be
+        uploaded this session. Each partâ€™s size must be
         exactly equal in size to the part size specified
         in the upload session that you created.
         One exception is the last part of the file, as this can be smaller.
@@ -394,34 +293,7 @@ class ChunkedUploadsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params(
-            {
-                'digest': to_string(digest),
-                'content-range': to_string(content_range),
-                **extra_headers,
-            }
-        )
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.upload_url,
-                        '/2.0/files/upload_sessions/',
-                        to_string(upload_session_id),
-                    ]
-                ),
-                method='PUT',
-                headers=headers_map,
-                file_stream=request_body,
-                content_type='application/octet-stream',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, UploadedPart)
+        pass
 
     def delete_file_upload_session_by_url(
         self, url: str, *, extra_headers: Optional[Dict[str, Optional[str]]] = None
@@ -448,20 +320,7 @@ class ChunkedUploadsManager:
         :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=url,
-                method='DELETE',
-                headers=headers_map,
-                response_format=ResponseFormat.NO_CONTENT,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return None
+        pass
 
     def delete_file_upload_session_by_id(
         self,
@@ -486,26 +345,7 @@ class ChunkedUploadsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.upload_url,
-                        '/2.0/files/upload_sessions/',
-                        to_string(upload_session_id),
-                    ]
-                ),
-                method='DELETE',
-                headers=headers_map,
-                response_format=ResponseFormat.NO_CONTENT,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return None
+        pass
 
     def get_file_upload_session_parts_by_url(
         self,
@@ -542,24 +382,7 @@ class ChunkedUploadsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'offset': to_string(offset), 'limit': to_string(limit)}
-        )
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=url,
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, UploadParts)
+        pass
 
     def get_file_upload_session_parts(
         self,
@@ -591,31 +414,7 @@ class ChunkedUploadsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'offset': to_string(offset), 'limit': to_string(limit)}
-        )
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.upload_url,
-                        '/2.0/files/upload_sessions/',
-                        to_string(upload_session_id),
-                        '/parts',
-                    ]
-                ),
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, UploadParts)
+        pass
 
     def create_file_upload_session_commit_by_url(
         self,
@@ -671,32 +470,7 @@ class ChunkedUploadsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {'parts': parts}
-        headers_map: Dict[str, str] = prepare_params(
-            {
-                'digest': to_string(digest),
-                'if-match': to_string(if_match),
-                'if-none-match': to_string(if_none_match),
-                **extra_headers,
-            }
-        )
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=url,
-                method='POST',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        if to_string(response.status) == '202':
-            return None
-        return deserialize(response.data, Files)
+        pass
 
     def create_file_upload_session_commit(
         self,
@@ -747,80 +521,10 @@ class ChunkedUploadsManager:
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {'parts': parts}
-        headers_map: Dict[str, str] = prepare_params(
-            {
-                'digest': to_string(digest),
-                'if-match': to_string(if_match),
-                'if-none-match': to_string(if_none_match),
-                **extra_headers,
-            }
-        )
-        response: FetchResponse = self.network_session.network_client.fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.upload_url,
-                        '/2.0/files/upload_sessions/',
-                        to_string(upload_session_id),
-                        '/commit',
-                    ]
-                ),
-                method='POST',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format=ResponseFormat.JSON,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        if to_string(response.status) == '202':
-            return None
-        return deserialize(response.data, Files)
+        pass
 
     def _reducer(self, acc: _PartAccumulator, chunk: ByteStream) -> _PartAccumulator:
-        last_index: int = acc.last_index
-        parts: List[UploadPart] = acc.parts
-        chunk_buffer: Buffer = read_byte_stream(chunk)
-        hash: Hash = Hash(algorithm=HashName.SHA1)
-        hash.update_hash(chunk_buffer)
-        sha_1: str = hash.digest_hash('base64')
-        digest: str = ''.join(['sha=', sha_1])
-        chunk_size: int = buffer_length(chunk_buffer)
-        bytes_start: int = last_index + 1
-        bytes_end: int = last_index + chunk_size
-        content_range: str = ''.join(
-            [
-                'bytes ',
-                to_string(bytes_start),
-                '-',
-                to_string(bytes_end),
-                '/',
-                to_string(acc.file_size),
-            ]
-        )
-        uploaded_part: UploadedPart = self.upload_file_part_by_url(
-            acc.upload_part_url,
-            generate_byte_stream_from_buffer(chunk_buffer),
-            digest,
-            content_range,
-        )
-        part: UploadPart = uploaded_part.part
-        part_sha_1: str = hex_to_base_64(part.sha_1)
-        assert part_sha_1 == sha_1
-        assert part.size == chunk_size
-        assert part.offset == bytes_start
-        acc.file_hash.update_hash(chunk_buffer)
-        return _PartAccumulator(
-            last_index=bytes_end,
-            parts=parts + [part],
-            file_size=acc.file_size,
-            upload_part_url=acc.upload_part_url,
-            file_hash=acc.file_hash,
-        )
+        pass
 
     def upload_big_file(
         self, file: ByteStream, file_name: str, file_size: int, parent_folder_id: str
@@ -836,37 +540,4 @@ class ChunkedUploadsManager:
         :param parent_folder_id: The ID of the folder where the file should be uploaded.
         :type parent_folder_id: str
         """
-        upload_session: UploadSession = self.create_file_upload_session(
-            parent_folder_id, file_size, file_name
-        )
-        upload_part_url: str = upload_session.session_endpoints.upload_part
-        commit_url: str = upload_session.session_endpoints.commit
-        list_parts_url: str = upload_session.session_endpoints.list_parts
-        part_size: int = upload_session.part_size
-        total_parts: int = upload_session.total_parts
-        assert part_size * total_parts >= file_size
-        assert upload_session.num_parts_processed == 0
-        file_hash: Hash = Hash(algorithm=HashName.SHA1)
-        chunks_iterator: Iterator = iterate_chunks(file, part_size, file_size)
-        results: _PartAccumulator = reduce_iterator(
-            chunks_iterator,
-            self._reducer,
-            _PartAccumulator(
-                last_index=-1,
-                parts=[],
-                file_size=file_size,
-                upload_part_url=upload_part_url,
-                file_hash=file_hash,
-            ),
-        )
-        parts: List[UploadPart] = results.parts
-        processed_session_parts: UploadParts = (
-            self.get_file_upload_session_parts_by_url(list_parts_url)
-        )
-        assert processed_session_parts.total_count == total_parts
-        sha_1: str = file_hash.digest_hash('base64')
-        digest: str = ''.join(['sha=', sha_1])
-        committed_session: Optional[Files] = (
-            self.create_file_upload_session_commit_by_url(commit_url, parts, digest)
-        )
-        return committed_session.entries[0]
+        pass

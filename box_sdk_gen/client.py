@@ -471,29 +471,7 @@ class BoxClient:
         :param fetch_options: Options to be passed to the fetch call
         :type fetch_options: FetchOptions
         """
-        auth: Authentication = (
-            self.auth if fetch_options.auth == None else fetch_options.auth
-        )
-        network_session: NetworkSession = (
-            self.network_session
-            if fetch_options.network_session == None
-            else fetch_options.network_session
-        )
-        enriched_fetch_options: FetchOptions = FetchOptions(
-            auth=auth,
-            network_session=network_session,
-            url=fetch_options.url,
-            method=fetch_options.method,
-            params=fetch_options.params,
-            headers=fetch_options.headers,
-            data=fetch_options.data,
-            file_stream=fetch_options.file_stream,
-            multipart_data=fetch_options.multipart_data,
-            content_type=fetch_options.content_type,
-            response_format=fetch_options.response_format,
-            follow_redirects=fetch_options.follow_redirects,
-        )
-        return network_session.network_client.fetch(enriched_fetch_options)
+        pass
 
     def with_as_user_header(self, user_id: str) -> 'BoxClient':
         """
@@ -501,23 +479,13 @@ class BoxClient:
         :param user_id: ID of an user to impersonate
         :type user_id: str
         """
-        return BoxClient(
-            auth=self.auth,
-            network_session=self.network_session.with_additional_headers(
-                {'As-User': user_id}
-            ),
-        )
+        pass
 
     def with_suppressed_notifications(self) -> 'BoxClient':
         """
         Create a new client with suppressed notifications. Calls made with the new client will not trigger email or webhook notifications
         """
-        return BoxClient(
-            auth=self.auth,
-            network_session=self.network_session.with_additional_headers(
-                {'Box-Notifications': 'off'}
-            ),
-        )
+        pass
 
     def with_extra_headers(
         self, *, extra_headers: Dict[str, str] = None
@@ -527,12 +495,7 @@ class BoxClient:
         :param extra_headers: Custom set of headers that will be included in every API call, defaults to None
         :type extra_headers: Dict[str, str], optional
         """
-        if extra_headers is None:
-            extra_headers = {}
-        return BoxClient(
-            auth=self.auth,
-            network_session=self.network_session.with_additional_headers(extra_headers),
-        )
+        pass
 
     def with_custom_base_urls(self, base_urls: BaseUrls) -> 'BoxClient':
         """
@@ -540,18 +503,13 @@ class BoxClient:
         :param base_urls: Custom set of base urls that will be used for every API call
         :type base_urls: BaseUrls
         """
-        return BoxClient(
-            auth=self.auth,
-            network_session=self.network_session.with_custom_base_urls(base_urls),
-        )
+        pass
 
     def with_proxy(self, config: ProxyConfig) -> 'BoxClient':
         """
         Create a new client with a custom proxy that will be used for every API call
         """
-        return BoxClient(
-            auth=self.auth, network_session=self.network_session.with_proxy(config)
-        )
+        pass
 
     def with_timeouts(self, config: TimeoutConfig) -> 'BoxClient':
         """
@@ -559,7 +517,4 @@ class BoxClient:
         :param config: Timeout configuration.
         :type config: TimeoutConfig
         """
-        return BoxClient(
-            auth=self.auth,
-            network_session=self.network_session.with_timeout_config(config),
-        )
+        pass
